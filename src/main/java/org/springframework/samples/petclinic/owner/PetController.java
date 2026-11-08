@@ -61,7 +61,7 @@ class PetController {
 	@ModelAttribute("pet")
 	public Pet findPet(@PathVariable("ownerId") int ownerId,
 			@PathVariable(name = "petId", required = false) Integer petId) {
-		return petId == null ? new Pet() : this.owners.findById(ownerId).getPet(petId);
+		return petId == null ? new Pet() : this.owners.findById(ownerId).getPetById(petId);
 	}
 
 	@InitBinder("owner")
@@ -100,7 +100,7 @@ class PetController {
 
 	@GetMapping("/pets/{petId}/edit")
 	public String initUpdateForm(Owner owner, @PathVariable("petId") int petId, ModelMap model) {
-		Pet pet = owner.getPet(petId);
+		Pet pet = owner.getPetById(petId);
 		model.put("pet", pet);
 		return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 	}

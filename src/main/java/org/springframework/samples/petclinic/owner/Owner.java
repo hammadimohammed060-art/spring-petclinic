@@ -109,14 +109,14 @@ public class Owner extends Person {
 
 	/**
 	 * Return the Pet with the given id, or null if none found for this Owner.
-	 * @param name to test
+	 * @param petId to test
 	 * @return a pet if pet id is already in use
 	 */
-	public Pet getPet(Integer id) {
+	public Pet getPetById(Integer petId) {
 		for (Pet pet : getPets()) {
 			if (!pet.isNew()) {
-				Integer compId = pet.getId();
-				if (compId.equals(id)) {
+				Integer existingPetId = pet.getId();
+				if (existingPetId.equals(petId)) {
 					return pet;
 				}
 			}
@@ -161,7 +161,7 @@ public class Owner extends Person {
 		Assert.notNull(petId, "Pet identifier must not be null!");
 		Assert.notNull(visit, "Visit must not be null!");
 
-		Pet pet = getPet(petId);
+		Pet pet = getPetById(petId);
 
 		Assert.notNull(pet, "Invalid Pet identifier!");
 
