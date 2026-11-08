@@ -42,6 +42,8 @@ class PetController {
 
 	private static final String VIEWS_PETS_CREATE_OR_UPDATE_FORM = "pets/createOrUpdatePetForm";
 
+	private static final String REDIRECT_TO_OWNER = "redirect:/owners/{ownerId}";
+
 	private final OwnerRepository owners;
 
 	public PetController(OwnerRepository owners) {
@@ -95,7 +97,7 @@ class PetController {
 		}
 
 		this.owners.save(owner);
-		return "redirect:/owners/{ownerId}";
+		return REDIRECT_TO_OWNER;
 	}
 
 	@GetMapping("/pets/{petId}/edit")
@@ -114,7 +116,7 @@ class PetController {
 
 		owner.addPet(pet);
 		this.owners.save(owner);
-		return "redirect:/owners/{ownerId}";
+		return REDIRECT_TO_OWNER;
 	}
 
 }
