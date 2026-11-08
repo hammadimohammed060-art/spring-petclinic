@@ -16,6 +16,7 @@
 package org.springframework.samples.petclinic.vet;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import jakarta.xml.bind.annotation.XmlElement;
@@ -31,6 +32,14 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 public class Vets {
 
 	private List<Vet> vets;
+
+	/**
+	 * Adds the given veterinarians to this list.
+	 * @param newVets the veterinarians to add
+	 */
+	public void addVets(Collection<Vet> newVets) {
+		getVetList().addAll(newVets);
+	}
 
 	@XmlElement
 	public List<Vet> getVetList() {

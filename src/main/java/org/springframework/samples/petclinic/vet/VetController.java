@@ -47,7 +47,7 @@ class VetController {
 		// objects so it is simpler for Object-Xml mapping
 		Vets vets = new Vets();
 		Page<Vet> paginated = findPaginated(page);
-		vets.getVetList().addAll(paginated.toList());
+		vets.addVets(paginated.toList());
 		return addPaginationModel(page, paginated, model);
 
 	}
@@ -72,7 +72,7 @@ class VetController {
 		// Here we are returning an object of type 'Vets' rather than a collection of Vet
 		// objects so it is simpler for JSon/Object mapping
 		Vets vets = new Vets();
-		vets.getVetList().addAll(this.vetRepository.findAll());
+		vets.addVets(this.vetRepository.findAll());
 		return vets;
 	}
 
