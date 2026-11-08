@@ -104,7 +104,7 @@ public class Owner extends Person {
 	 * @return a pet if pet name is already in use
 	 */
 	public Pet getPet(String name) {
-		return getPet(name, false);
+		return findPetByName(name, false);
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class Owner extends Person {
 	 * @param name to test
 	 * @return a pet if pet name is already in use
 	 */
-	public Pet getPet(String name, boolean ignoreNew) {
+	private Pet findPetByName(String name, boolean ignoreNew) {
 		name = name.toLowerCase();
 		for (Pet pet : getPets()) {
 			if (!ignoreNew || !pet.isNew()) {
@@ -141,6 +141,15 @@ public class Owner extends Person {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Return the saved Pet with the given name, or null if none found for this Owner.
+	 * @param name to test
+	 * @return a saved pet if the pet name is already in use
+	 */
+	public Pet getExistingPet(String name) {
+		return findPetByName(name, true);
 	}
 
 	@Override
