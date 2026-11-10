@@ -88,26 +88,23 @@ class OwnerController {
 	@GetMapping("/owners")
 	public String processFindForm(@RequestParam(defaultValue = "1") int page, Owner owner, BindingResult result,
 			Model model) {
-		// allow parameterless GET request for /owners to return all records
+		// A missing last name means "list all owners": the query matches last names that
+		// start with the given text, so an empty string matches every owner.
 		if (owner.getLastName() == null) {
-			owner.setLastName(""); // empty string signifies broadest possible search
+			owner.setLastName("");
 		}
 
-		// find owners by last name
 		Page<Owner> ownersResults = findPaginatedForOwnersLastName(page, owner.getLastName());
 		if (ownersResults.isEmpty()) {
-			// no owners found
 			result.rejectValue("lastName", "notFound", "not found");
 			return "owners/findOwners";
 		}
 
 		if (ownersResults.getTotalElements() == 1) {
-			// 1 owner found
 			owner = ownersResults.iterator().next();
 			return "redirect:/owners/" + owner.getId();
 		}
 
-		// multiple owners found
 		return addPaginationModel(page, model, ownersResults);
 	}
 
