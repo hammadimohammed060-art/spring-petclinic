@@ -133,9 +133,7 @@ public class Owner extends Person {
 		name = name.toLowerCase();
 		for (Pet pet : getPets()) {
 			if (!ignoreNew || !pet.isNew()) {
-				String compName = pet.getName();
-				compName = compName == null ? "" : compName.toLowerCase();
-				if (compName.equals(name)) {
+				if (hasName(pet, name)) {
 					return pet;
 				}
 			}
@@ -150,6 +148,12 @@ public class Owner extends Person {
 	 */
 	public Pet getExistingPet(String name) {
 		return findPetByName(name, true);
+	}
+
+	private boolean hasName(Pet pet, String lowerCaseName) {
+		String petName = pet.getName();
+		String lowerCasePetName = petName == null ? "" : petName.toLowerCase();
+		return lowerCasePetName.equals(lowerCaseName);
 	}
 
 	@Override

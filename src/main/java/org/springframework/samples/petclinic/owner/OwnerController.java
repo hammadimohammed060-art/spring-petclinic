@@ -97,18 +97,26 @@ class OwnerController {
 		Page<Owner> ownersResults = findPaginatedForOwnersLastName(page, owner.getLastName());
 		if (ownersResults.isEmpty()) {
 			// no owners found
-			result.rejectValue("lastName", "notFound", "not found");
-			return "owners/findOwners";
+			return rejectWhenNoOwnersFound(result);
 		}
 
 		if (ownersResults.getTotalElements() == 1) {
 			// 1 owner found
-			owner = ownersResults.iterator().next();
-			return "redirect:/owners/" + owner.getId();
+			return redirectToSingleOwner(ownersResults);
 		}
 
 		// multiple owners found
 		return addPaginationModel(page, model, ownersResults);
+	}
+
+	private String rejectWhenNoOwnersFound(BindingResult result) {
+		result.rejectValue("lastName", "notFound", "not found");
+		return "owners/findOwners";
+	}
+
+	private String redirectToSingleOwner(Page<Owner> ownersResults) {
+		Owner matchingOwner = ownersResults.iterator().next();
+		return "redirect:/owners/" + matchingOwner.getId();
 	}
 
 	private String addPaginationModel(int page, Model model, Page<Owner> paginated) {
