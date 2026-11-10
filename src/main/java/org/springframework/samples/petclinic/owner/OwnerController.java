@@ -44,6 +44,8 @@ import jakarta.validation.Valid;
 @Controller
 class OwnerController {
 
+	private static final int OWNER_PAGE_SIZE = 5;
+
 	private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
 
 	private final OwnerRepository owners;
@@ -122,8 +124,7 @@ class OwnerController {
 	}
 
 	private Page<Owner> findPaginatedForOwnersLastName(int page, String lastname) {
-		int pageSize = 5;
-		Pageable pageable = PageRequest.of(page - 1, pageSize);
+		Pageable pageable = PageRequest.of(page - 1, OWNER_PAGE_SIZE);
 		return owners.findByLastName(lastname, pageable);
 	}
 
